@@ -4,16 +4,17 @@
 
 #ifndef INTERSECTION_H
 #define INTERSECTION_H
-#include "Sphere.h"
 
+class Sphere;
 
 class Intersection {
 public:
     double t;
-    Sphere object;
-    Intersection(double t, const Sphere &object);
-};
+    const Sphere* object;
+    Intersection(double t, const Sphere* object);
 
+    bool operator==(const Intersection& other) const;
+};
 
 
 #endif //INTERSECTION_H

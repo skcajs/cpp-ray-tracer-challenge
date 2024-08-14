@@ -6,6 +6,7 @@
 #define SPHERE_H
 #include <vector>
 
+#include "Intersections.h"
 #include "Ray.h"
 
 
@@ -14,7 +15,7 @@ public:
     Point origin;
     explicit Sphere(const Point &origin  = point(0,0,0));
 
-    [[nodiscard]] std::vector<double> intersects(const Ray &r) const;
+    [[nodiscard]] Intersections intersects(const Ray &r) const;
 };
 
 inline bool operator==(const Sphere &lhs, const Sphere &rhs) {

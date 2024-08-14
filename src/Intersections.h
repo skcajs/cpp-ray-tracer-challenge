@@ -9,16 +9,16 @@
 
 #include <vector>
 #include <initializer_list>
+#include <optional>
 
-#include "Intersection.h"
-
+class Intersection;
 
 class Intersections : public std::vector<Intersection> {
 public:
     // Variadic constructor using initializer list
     Intersections(std::initializer_list<Intersection> its);
+
+    [[nodiscard]] std::optional<Intersection> hit() const;
 };
-
-
 
 #endif //INTERSECTIONS_H

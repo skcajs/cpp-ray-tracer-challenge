@@ -4,4 +4,18 @@
 
 #include "Intersections.h"
 
+#include "Intersection.h"
+
 Intersections::Intersections(const std::initializer_list<Intersection> its) : std::vector<Intersection>(its) {}
+
+std::optional<Intersection> Intersections::hit() const {
+    std::optional<Intersection> closest = std::nullopt;
+    for (const auto& intersection : *this) {
+        if (intersection.t > 0 && (!closest.has_value() || intersection.t < closest->t)) {
+            closest = intersection;
+        }
+    }
+    return closest;
+}
+
+
