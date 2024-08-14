@@ -3,8 +3,9 @@
 //
 
 #include "Sphere.h"
-
 #include "Intersection.h"
+
+#include <cmath>
 
 Sphere::Sphere(const Point &origin) : origin(origin) {}
 

@@ -3,6 +3,7 @@
 //
 
 #include "Tuple.h"
+#include <cmath>
 
 // Default Constructor
 Tuple::Tuple() : e {0, 0, 0, 0}, x(e[0]), y(e[1]), z(e[2]), w(e[3]) {}

@@ -5,8 +5,6 @@
 #ifndef TUPLE_H
 #define TUPLE_H
 
-#include <cmath>
-
 class Tuple {
 public:
     double e[4];
@@ -45,8 +43,8 @@ using Point = Tuple;
 using Vector = Tuple;
 
 // Free functions
-Tuple point(double x = 0, double y = 0, double z = 0);
-Tuple vector(double x = 0, double y = 0, double z = 0);
+Point point(double x = 0, double y = 0, double z = 0);
+Vector vector(double x = 0, double y = 0, double z = 0);
 
 Tuple operator+(const Tuple& u, const Tuple& v);
 Tuple operator-(const Tuple& u, const Tuple& v);

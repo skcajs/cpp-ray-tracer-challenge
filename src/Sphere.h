@@ -4,7 +4,6 @@
 
 #ifndef SPHERE_H
 #define SPHERE_H
-#include <vector>
 
 #include "Intersections.h"
 #include "Ray.h"

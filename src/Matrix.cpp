@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-Matrix::Matrix(const std::vector<float> &data) : size(static_cast<std::size_t>(std::sqrt(data.size()))){
+Matrix::Matrix(const std::vector<double> &data) : size(static_cast<std::size_t>(std::sqrt(data.size()))){
 
     if (size < 0) {
         throw std::invalid_argument("Matrix dimensions must be positive");
@@ -26,16 +26,12 @@ Tuple Matrix::operator*(const Tuple& other) const {
         throw std::invalid_argument("Matrix must be 4x4 to multiply with a 4-dimensional tuple.");
     }
 
-    // Initialize a new Tuple to store the result
-    const Tuple result;
-
-    // Perform matrix-vector multiplication
-    result.x = e[0][0] * other.x + e[0][1] * other.y + e[0][2] * other.z + e[0][3] * other.w;
-    result.y = e[1][0] * other.x + e[1][1] * other.y + e[1][2] * other.z + e[1][3] * other.w;
-    result.z = e[2][0] * other.x + e[2][1] * other.y + e[2][2] * other.z + e[2][3] * other.w;
-    result.w = e[3][0] * other.x + e[3][1] * other.y + e[3][2] * other.z + e[3][3] * other.w;
-
-    return result;
+    return {
+        e[0][0] * other.x + e[0][1] * other.y + e[0][2] * other.z + e[0][3] * other.w,
+        e[1][0] * other.x + e[1][1] * other.y + e[1][2] * other.z + e[1][3] * other.w,
+        e[2][0] * other.x + e[2][1] * other.y + e[2][2] * other.z + e[2][3] * other.w,
+        e[3][0] * other.x + e[3][1] * other.y + e[3][2] * other.z + e[3][3] * other.w
+    };
 }
 
 Matrix Matrix::Identity() {
@@ -61,8 +57,8 @@ Matrix Matrix::transpose() const {
     return result;
 }
 
-float Matrix::determinant() const { // NOLINT(*-no-recursion)
-    float det = 0;
+double Matrix::determinant() const { // NOLINT(*-no-recursion)
+    double det = 0;
 
     if (size == 2) {
         det = e[0][0] * e[1][1] - e[0][1] * e[1][0];
@@ -98,23 +94,23 @@ Matrix Matrix::subMatrix(const int rowToRemove, const int colToRemove) const {
     return sub;
 }
 
-float Matrix::minor(const int row, const int col) const { // NOLINT(*-no-recursion)
+double Matrix::minor(const int row, const int col) const { // NOLINT(*-no-recursion)
     if (size <= 1) {
         throw std::invalid_argument("Minor is not defined for matrices of size 1x1 or smaller");
     }
     return subMatrix(row, col).determinant();
 }
 
-float Matrix::cofactor(const int row, const int col) const { // NOLINT(*-no-recursion)
+double Matrix::cofactor(const int row, const int col) const { // NOLINT(*-no-recursion)
     if (row < 0 || row >= size || col < 0 || col >= size) {
         throw std::out_of_range("Matrix index out of range");
     }
 
     // Calculate the minor of the element at (row, col)
-    const float minorValue = minor(row, col);
+    const double minorValue = minor(row, col);
 
     // Calculate the cofactor
-    const float cofactorValue = (static_cast<float>((row + col) % 2 == 0 ? 1 : -1)) * minorValue;;
+    const double cofactorValue = (static_cast<double>((row + col) % 2 == 0 ? 1 : -1)) * minorValue;;
 
     return cofactorValue;
 }
@@ -142,9 +138,9 @@ Matrix::~Matrix() {
 }
 
 void Matrix::allocateMatrix(const std::size_t size) {
-    e = new float*[size];
+    e = new double*[size];
     for (int i = 0; i < size; ++i) {
-        e[i] = new float[size];
+        e[i] = new double[size];
     }
 }
 
@@ -155,14 +151,14 @@ void Matrix::deallocateMatrix() const {
     delete[] e;
 }
 
-float Matrix::element(const int row, const int col) const {
+double Matrix::element(const int row, const int col) const {
     if (row < 0 || row >= size || col < 0 || col >= size) {
         throw std::out_of_range("Matrix index out of range");
     }
     return e[row][col];
 }
 
-void Matrix::setElement(const int row, const int col, const float value) const {
+void Matrix::setElement(const int row, const int col, const double value) const {
     if (row < 0 || row >= size || col < 0 || col >= size) {
         throw std::out_of_range("Matrix index out of range");
     }

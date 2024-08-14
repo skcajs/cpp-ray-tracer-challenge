@@ -6,29 +6,30 @@
 #define MATRIX_H
 
 #pragma once
+#include <cmath>
 #include <vector>
 
 #include "Tuple.h"
 
 class Matrix {
 public:
-    explicit Matrix(const std::vector<float> &data);
+    explicit Matrix(const std::vector<double> &data);
     explicit Matrix(std::size_t size);
     Matrix(const Matrix& other);
 
     Matrix& operator=(const Matrix& other);
     Tuple operator*(const Tuple& other) const;
 
-    [[nodiscard]] float element(int row, int col) const;
-    void setElement(int row, int col, float value) const;
+    [[nodiscard]] double element(int row, int col) const;
+    void setElement(int row, int col, double value) const;
 
     [[nodiscard]] auto Size() const { return size; }
 
     [[nodiscard]] Matrix transpose() const;
-    [[nodiscard]] float determinant() const;
+    [[nodiscard]] double determinant() const;
     [[nodiscard]] Matrix subMatrix(int rowToRemove, int colToRemove) const;
-    [[nodiscard]] float minor(int row, int col) const;
-    [[nodiscard]] float cofactor(int row, int col) const;
+    [[nodiscard]] double minor(int row, int col) const;
+    [[nodiscard]] double cofactor(int row, int col) const;
     [[nodiscard]] bool isInvertible() const;
     [[nodiscard]] Matrix inverse() const;
 
@@ -38,7 +39,7 @@ public:
 
 private:
     std::size_t size;
-    float** e{};
+    double** e{};
 
     void allocateMatrix(std::size_t size);
     void deallocateMatrix() const;
@@ -50,7 +51,7 @@ inline bool operator==(const Matrix& u, const Matrix& v) {
 
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
-            if (constexpr float tolerance = 1e-4; std::abs(u.element(i, j) - v.element(i, j)) > tolerance) {
+            if (constexpr double tolerance = 1e-4; std::abs(u.element(i, j) - v.element(i, j)) > tolerance) {
                 return false;
             }
         }
@@ -67,7 +68,7 @@ inline Matrix operator*(const Matrix& u, const Matrix& v) {
     // Perform the matrix multiplication
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
-            float sum = 0;
+            double sum = 0;
             for (int k = 0; k < size; ++k) {
                 sum += u.element(i, k) * v.element(k, j);
             }
