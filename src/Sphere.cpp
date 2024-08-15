@@ -27,3 +27,11 @@ Intersections Sphere::intersect(const Ray &r) const {
 void Sphere::setTransform(const Matrix &m) const {
     transform = m;
 }
+
+Vector Sphere::normalAt(const Point &worldPoint) const {
+    const auto objectPoint = transform.inverse() * worldPoint;
+    const auto objectNormal = objectPoint - origin;
+    const auto worldNormal = transform.inverse().transpose() * objectNormal;
+    worldNormal.resetWVector(); // Dont like this
+    return worldNormal.normalize();
+}

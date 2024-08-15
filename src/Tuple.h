@@ -7,7 +7,7 @@
 
 class Tuple {
 public:
-    double e[4]{};
+    mutable double e[4]{};
 
     // Constructors
     Tuple();
@@ -17,7 +17,6 @@ public:
     double y;
     double z;
     double w;
-
 
     // Unary operations
     Tuple operator-() const;
@@ -37,6 +36,9 @@ public:
     [[nodiscard]] Tuple normalize() const;
     [[nodiscard]] double dot(const Tuple& v) const;
     [[nodiscard]] Tuple cross(const Tuple& v) const;
+
+    void resetWVector() const;
+    void resetWPoint() const;
 };
 
 using Point = Tuple;

@@ -14,7 +14,7 @@ int main() {
 
     std::vector<std::vector<Color>> image(canvasPixels, std::vector<Color>(canvasPixels, Color::black()));
 
-    auto canvas = Canvas {canvasPixels, canvasPixels};
+    const auto canvas = Canvas {canvasPixels, canvasPixels};
 
     for (int y = 0; y < canvasPixels; ++y) {
         const auto worldY = half - pixelSize * y;

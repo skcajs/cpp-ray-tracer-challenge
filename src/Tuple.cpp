@@ -5,21 +5,16 @@
 #include "Tuple.h"
 #include <cmath>
 
-// Default Constructor
 Tuple::Tuple() : e{0, 0, 0, 0}, x(0), y(e[1]), z(e[2]), w(e[3]) {
 }
 
-// Parameterized Constructor
 Tuple::Tuple(const double e0, const double e1, const double e2, const double e3) : e{e0, e1, e2, e3},  x(e[0]), y(e[1]), z(e[2]), w(e[3]) {
 }
 
-
-// Unary Minus
 Tuple Tuple::operator-() const {
     return Tuple {-e[0], -e[1], -e[2], -e[3]};
 }
 
-// Compound Assignment Operators
 Tuple& Tuple::operator+=(const Tuple& v) {
     e[0] += v.e[0];
     e[1] += v.e[1];
@@ -50,7 +45,6 @@ Tuple& Tuple::operator/=(const double t) {
     return *this;
 }
 
-// Binary Operators
 Tuple Tuple::operator*(const double t) const {
     return Tuple { e[0] * t, e[1] * t, e[2] * t, e[3] * t };
 }
@@ -59,7 +53,6 @@ Tuple Tuple::operator/(const double t) const {
     return Tuple { e[0] / t, e[1] / t, e[2] / t, e[3] / t };
 }
 
-// Member Functions
 [[nodiscard]] double Tuple::norm() const {
     return std::sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
 }
@@ -82,7 +75,14 @@ Tuple Tuple::operator/(const double t) const {
     };
 }
 
-// Free Functions
+void Tuple::resetWVector() const{
+    e[3] = 0;
+}
+
+void Tuple::resetWPoint() const{
+    e[3] = 1;
+}
+
 Tuple point(const double x, const double y, const double z) {
     return Point {x, y, z, 1};
 }

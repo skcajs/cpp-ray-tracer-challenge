@@ -18,6 +18,8 @@ public:
 
     [[nodiscard]] Intersections intersect(const Ray &r) const;
     void setTransform(const Matrix& m) const;
+
+    Vector normalAt(const Point &worldPoint) const;
 };
 
 inline bool operator==(const Sphere &lhs, const Sphere &rhs) {
