@@ -28,6 +28,14 @@ TEST_CASE("Translating a ray") {
     const auto r2 = r.transform(m);
 
     REQUIRE(r2.origin == point(4,6,8));
+    REQUIRE_TUPLES(r2.direction, vector(0,1,0));
+}
 
-    // REQUIRE_TUPLES(r2.direction, vector(0,1,0));
+TEST_CASE("Scaling a ray") {
+    const auto r = Ray {point(1,2,3), vector(0,1,0)};
+    const auto m = scaling(2,3,4);
+    const auto r2 = r.transform(m);
+
+    REQUIRE_TUPLES(r2.origin, point(2,6,12));
+    REQUIRE_TUPLES(r2.direction, vector(0,3,0));
 }
