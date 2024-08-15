@@ -53,7 +53,7 @@ TEST_CASE("A sphere's default transformtion") {
 }
 
 TEST_CASE("Changing a sphere's transformation") {
-    const auto s = Sphere {};
+    auto s = Sphere {};
     const auto t = translation(2,3,4);
     s.setTransform(t);
     REQUIRE(s.transform == t);
@@ -61,7 +61,7 @@ TEST_CASE("Changing a sphere's transformation") {
 
 TEST_CASE("Intersecting a scaled sphere with a ray") {
     const auto r = Ray {point(0,0,-5), vector(0,0,1)};
-    const auto s = Sphere {};
+    auto s = Sphere {};
     s.setTransform(scaling(2,2,2));
     const auto xs = s.intersect(r);
     REQUIRE(xs.size() == 2);
@@ -71,7 +71,7 @@ TEST_CASE("Intersecting a scaled sphere with a ray") {
 
 TEST_CASE("Intersecting a translated sphere with a ray") {
     const auto r = Ray {point(0,0,-5), vector(0,0,1)};
-    const auto s = Sphere {};
+    auto s = Sphere {};
     s.setTransform(translation(5,0,0));
     const auto xs = s.intersect(r);
     REQUIRE(xs.empty());
@@ -111,7 +111,7 @@ TEST_CASE("The normal is a normalized vector") {
 
 TEST_CASE("Computing the normal on a translated sphere") {
     constexpr auto a = 0.70711;
-    const auto s = Sphere {};
+    auto s = Sphere {};
     s.setTransform(translation(0,1,0));
     const auto n = s.normalAt(point(0, 1+a, -a));
     REQUIRE_TUPLES(n, vector(0,a,-a));
@@ -119,8 +119,7 @@ TEST_CASE("Computing the normal on a translated sphere") {
 
 TEST_CASE("Computing the normal on a transformed sphere") {
     constexpr auto root = std::sqrt(2)/2;
-    constexpr auto a = 0.70711;
-    const auto s = Sphere {};
+    auto s = Sphere {};
     s.setTransform(scaling(1,0.5,1) * rotationZ(M_PI/5));
     const auto n = s.normalAt(point(0, root, -root));
     REQUIRE_TUPLES(n, vector(0,0.97014,-0.24254));

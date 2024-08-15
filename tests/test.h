@@ -21,6 +21,8 @@
 #include "../src/Sphere.h"
 #include "../src/Intersection.h"
 #include "../src/Intersections.h"
+#include "../src/Light.h"
+#include "../src/Material.h"
 
 inline void REQUIRE_TUPLES(const Tuple &r, const Tuple &l, const double EPSILON = 1e-5) {
     REQUIRE(std::fabs(r.x - l.x) < EPSILON);

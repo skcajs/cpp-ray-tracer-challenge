@@ -33,6 +33,10 @@ add_executable(cpp_ray_tracer_challenge
         src/Intersection.h
         src/Intersections.cpp
         src/Intersections.h
+        src/Light.cpp
+        src/Light.h
+        src/Material.cpp
+        src/Material.h
 )
 
 # Include the X11 headers
@@ -52,6 +56,8 @@ add_executable(tests
         src/Sphere.cpp
         src/Intersection.cpp
         src/Intersections.cpp
+        src/Light.cpp
+        src/Material.cpp
 
         tests/test_tuples.cpp
         tests/test_colors.cpp
@@ -61,6 +67,8 @@ add_executable(tests
         tests/test_ray.cpp
         tests/test_spheres.cpp
         tests/test_intersections.cpp
+        tests/test_lights.cpp
+        tests/test_materials.cpp
 )
 
 # Link Catch2 with the test executable

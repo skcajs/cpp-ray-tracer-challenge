@@ -10,7 +10,7 @@
 Canvas::Canvas(const int width, const int height)
     : mWidth(width), mHeight(height), image(height, std::vector<Color>(width, Color::blue())) {}
 
-void Canvas::setImage(const std::vector<std::vector<Color>>& nextImage) const {
+void Canvas::setImage(const std::vector<std::vector<Color>>& nextImage) {
     image = nextImage;
 }
 

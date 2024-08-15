@@ -13,8 +13,7 @@ int main() {
     const auto shape = Sphere();
 
     std::vector<std::vector<Color>> image(canvasPixels, std::vector<Color>(canvasPixels, Color::black()));
-
-    const auto canvas = Canvas {canvasPixels, canvasPixels};
+    auto canvas = Canvas {canvasPixels, canvasPixels};
 
     for (int y = 0; y < canvasPixels; ++y) {
         const auto worldY = half - pixelSize * y;

@@ -83,6 +83,10 @@ void Tuple::resetWPoint() const{
     e[3] = 1;
 }
 
+Vector Tuple::reflect(const Tuple &normal) const {
+    return *this - (normal * 2 * this->dot(normal));
+}
+
 Tuple point(const double x, const double y, const double z) {
     return Point {x, y, z, 1};
 }

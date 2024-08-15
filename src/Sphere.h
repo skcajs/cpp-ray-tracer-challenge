@@ -6,18 +6,20 @@
 #define SPHERE_H
 
 #include "Intersections.h"
+#include "Material.h"
 #include "Matrix.h"
 #include "Ray.h"
-
 
 class Sphere {
 public:
     Point origin;
-    mutable Matrix transform = Matrix::Identity();
+    Matrix transform = Matrix::Identity();
+    Material material;
+
     explicit Sphere(const Point &origin  = point(0,0,0));
 
     [[nodiscard]] Intersections intersect(const Ray &r) const;
-    void setTransform(const Matrix& m) const;
+    void setTransform(const Matrix& m);
 
     Vector normalAt(const Point &worldPoint) const;
 };

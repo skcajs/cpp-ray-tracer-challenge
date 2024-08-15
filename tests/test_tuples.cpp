@@ -105,3 +105,18 @@ TEST_CASE("norm of a normalised vector", "[normalizing]") {
     const auto v = vector(1,2,3);
     REQUIRE(v.normalize().norm() == 1);
 }
+
+TEST_CASE("Reflecting a vector approaching at 45' ") {
+    const auto v = vector(1,-1, 0);
+    const auto n = vector(0,1,0);
+    const auto r = v.reflect(n);
+    REQUIRE(r == vector(1,1,0));
+}
+
+TEST_CASE("Reflecting a vector off a slanted surface' ") {
+    constexpr auto root = std::sqrt(2)/2;
+    const auto v = vector(0,-1, 0);
+    const auto n = vector(root,root,0);
+    const auto r = v.reflect(n);
+    REQUIRE_TUPLES(r, vector(1,0,0));
+}

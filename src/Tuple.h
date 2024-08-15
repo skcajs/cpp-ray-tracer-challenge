@@ -39,6 +39,8 @@ public:
 
     void resetWVector() const;
     void resetWPoint() const;
+
+    Tuple reflect(const Tuple & normal) const;
 };
 
 using Point = Tuple;

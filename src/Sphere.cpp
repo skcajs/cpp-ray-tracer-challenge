@@ -24,7 +24,7 @@ Intersections Sphere::intersect(const Ray &r) const {
     return result;
 }
 
-void Sphere::setTransform(const Matrix &m) const {
+void Sphere::setTransform(const Matrix &m) {
     transform = m;
 }
 
