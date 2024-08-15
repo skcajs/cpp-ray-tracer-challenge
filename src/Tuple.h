@@ -7,17 +7,17 @@
 
 class Tuple {
 public:
-    double e[4];
+    double e[4]{};
 
     // Constructors
     Tuple();
     Tuple(double e0, double e1, double e2, double e3);
 
-    // Accessors
-    double& x;
-    double& y;
-    double& z;
-    double& w;
+    double x;
+    double y;
+    double z;
+    double w;
+
 
     // Unary operations
     Tuple operator-() const;

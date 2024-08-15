@@ -6,11 +6,13 @@
 #include <cmath>
 
 // Default Constructor
-Tuple::Tuple() : e {0, 0, 0, 0}, x(e[0]), y(e[1]), z(e[2]), w(e[3]) {}
+Tuple::Tuple() : e{0, 0, 0, 0}, x(0), y(e[1]), z(e[2]), w(e[3]) {
+}
 
 // Parameterized Constructor
-Tuple::Tuple(const double e0, const double e1, const double e2, const double e3)
-    : e {e0, e1, e2, e3}, x(e[0]), y(e[1]), z(e[2]), w(e[3]) {}
+Tuple::Tuple(const double e0, const double e1, const double e2, const double e3) : e{e0, e1, e2, e3},  x(e[0]), y(e[1]), z(e[2]), w(e[3]) {
+}
+
 
 // Unary Minus
 Tuple Tuple::operator-() const {
@@ -90,9 +92,9 @@ Tuple vector(const double x, const double y, const double z) {
 }
 
 Tuple operator+(const Tuple& u, const Tuple& v) {
-    return Tuple {u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2], u.e[3] + v.e[3]};
+    return Tuple {u.x + v.x, u.y + v.y, u.z + v.z, u.w + v.w};
 }
 
 Tuple operator-(const Tuple& u, const Tuple& v) {
-    return Tuple {u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2], u.e[3] - v.e[3]};
+    return Tuple {u.x - v.x, u.y - v.y, u.z - v.z, u.w - v.w};
 }

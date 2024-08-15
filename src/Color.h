@@ -11,10 +11,10 @@ public:
     Color(double e0, double e1, double e2, double e3 = 1);
 
     // Accessors
-    double& r;
-    double& g;
-    double& b;
-    double& a;
+    double r;
+    double g;
+    double b;
+    double a;
 
     // Member functions
     Color operator-() const;
