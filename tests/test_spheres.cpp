@@ -124,3 +124,17 @@ TEST_CASE("Computing the normal on a transformed sphere") {
     const auto n = s.normalAt(point(0, root, -root));
     REQUIRE_TUPLES(n, vector(0,0.97014,-0.24254));
 }
+
+TEST_CASE("A sphere has a default material") {
+    const auto s = Sphere {};
+    const auto m = s.material;
+    COMPARE_MATERIALS(m, Material {});
+}
+
+TEST_CASE("A sphere may be assigned a material") {
+    auto s = Sphere {};
+    auto m = s.material;
+    m.ambient = 1;
+    s.material = m;
+    COMPARE_MATERIALS(s.material, m);
+}

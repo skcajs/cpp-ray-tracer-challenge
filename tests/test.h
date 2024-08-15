@@ -24,6 +24,8 @@
 #include "../src/Light.h"
 #include "../src/Material.h"
 
+
+
 inline void REQUIRE_TUPLES(const Tuple &r, const Tuple &l, const double EPSILON = 1e-5) {
     REQUIRE(std::fabs(r.x - l.x) < EPSILON);
     REQUIRE(std::fabs(r.y - l.y) < EPSILON);
@@ -31,11 +33,11 @@ inline void REQUIRE_TUPLES(const Tuple &r, const Tuple &l, const double EPSILON 
     REQUIRE(std::fabs(r.w - l.w) < EPSILON);
 }
 
-inline void REQUIRE_COLORS(const Color &r, const Color &l, const double EPSILON = 1e-5) {
-    REQUIRE(std::fabs(r.r - l.r) < EPSILON);
-    REQUIRE(std::fabs(r.g - l.g) < EPSILON);
-    REQUIRE(std::fabs(r.b - l.b) < EPSILON);
-    REQUIRE(std::fabs(r.a - l.a) < EPSILON);
+inline void REQUIRE_COLORS(const Color &l, const Color &r) {
+    REQUIRE(l.r == Catch::Approx(r.r));
+    REQUIRE(l.g == Catch::Approx(r.g));
+    REQUIRE(l.b == Catch::Approx(r.b));
+    REQUIRE(l.a == Catch::Approx(r.a));
 }
 
 inline void REQUIRE_MATRICES(const Matrix &r, const Matrix &l) {
@@ -46,6 +48,14 @@ inline void REQUIRE_MATRICES(const Matrix &r, const Matrix &l) {
             REQUIRE(r.element(i,j) == Catch::Approx(l.element(i,j)));
         }
     }
+}
+
+inline void COMPARE_MATERIALS(const Material &l, const Material &r) {
+    REQUIRE(l.ambient == r.ambient);
+    REQUIRE_COLORS(l.color, r.color);
+    REQUIRE(l.diffuse == r.diffuse);
+    REQUIRE(l.specular == r.specular);
+    REQUIRE(l.shininess == r.shininess);
 }
 
 #endif //TESTS_H
