@@ -12,6 +12,7 @@
 #include <optional>
 
 class Intersection;
+#include "Intersection.h"
 
 class Intersections : public std::vector<Intersection> {
 public:

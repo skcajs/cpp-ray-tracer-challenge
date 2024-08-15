@@ -4,8 +4,6 @@
 
 #include "Intersections.h"
 
-#include "Intersection.h"
-
 Intersections::Intersections(const std::initializer_list<Intersection> its) : std::vector<Intersection>(its) {}
 
 std::optional<Intersection> Intersections::hit() const {

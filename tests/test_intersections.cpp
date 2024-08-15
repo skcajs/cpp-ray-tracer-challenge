@@ -25,7 +25,7 @@ TEST_CASE("Aggregating intersections") {
 TEST_CASE("Intersect sets the object on the intersection") {
     const auto r = Ray {point(0,0,-5), vector(0,0,1)};
     const auto s = Sphere{};
-    const auto xs = s.intersects(r);
+    const auto xs = s.intersect(r);
     REQUIRE(xs.size() == 2);
     REQUIRE(xs[0].object == &s);
     REQUIRE(xs[1].object == &s);

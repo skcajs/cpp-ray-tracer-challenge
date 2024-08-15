@@ -21,6 +21,22 @@ Matrix::Matrix(const std::size_t size) : size(size) {
     allocateMatrix(size);
 }
 
+Matrix& Matrix::operator=(const Matrix& other) {
+    if (this == &other) return *this;
+
+    deallocateMatrix();
+
+    size = other.size;
+    allocateMatrix(size);
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            e[i][j] = other.e[i][j];
+        }
+    }
+    return *this;
+}
+
 Tuple Matrix::operator*(const Tuple& other) const {
     if (size != 4) {
         throw std::invalid_argument("Matrix must be 4x4 to multiply with a 4-dimensional tuple.");

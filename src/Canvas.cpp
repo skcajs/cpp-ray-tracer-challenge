@@ -8,7 +8,11 @@
 #include <cstdlib> // For exit() and malloc()
 
 Canvas::Canvas(const int width, const int height)
-    : mWidth(width), mHeight(height), image(height, std::vector<Color>(width, Color::black())) {}
+    : mWidth(width), mHeight(height), image(height, std::vector<Color>(width, Color::blue())) {}
+
+void Canvas::setImage(const std::vector<std::vector<Color>>& nextImage) {
+    image = nextImage;
+}
 
 void Canvas::display() const {
     XEvent event;
@@ -58,7 +62,7 @@ void Canvas::display() const {
             const int byte_offset = y * ximage->bytes_per_line + x * (ximage->bits_per_pixel / 8);
 
             // Assuming 32-bit color depth
-            auto pixel_ptr = reinterpret_cast<unsigned long *>(ximage->data + byte_offset);
+            const auto pixel_ptr = reinterpret_cast<unsigned long *>(ximage->data + byte_offset);
             *pixel_ptr = pixel;
         }
     }

@@ -30,6 +30,9 @@ public:
 
     // Static member function
     static Color black();
+    static Color red();
+    static Color green();
+    static Color blue();
 };
 
 // Non-member functions

@@ -69,6 +69,18 @@ Color Color::black() {
     return Color {0, 0, 0, 1};
 }
 
+Color Color::red() {
+    return Color {1, 0, 0, 1};
+}
+
+Color Color::green() {
+    return Color {0, 1, 0, 1};
+}
+
+Color Color::blue() {
+    return Color {0, 0, 1, 1};
+}
+
 // Non-member functions
 Color color(const double r, const double g, const double b) {
     return Color {r, g, b, 1};
