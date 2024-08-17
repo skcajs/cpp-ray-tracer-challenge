@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-Material::Material(const Color &color, const float ambient, const float diffuse, const float specular, const float shininess) :
+Material::Material(const Color &color, const double ambient, const double diffuse, const double specular, const double shininess) :
                                     color(color), ambient(ambient), diffuse(diffuse), specular(specular), shininess(shininess) {}
 
 Color Material::lighting(const Light &light, const Point &p, const Vector &eyeV, const Vector &normalV) const {

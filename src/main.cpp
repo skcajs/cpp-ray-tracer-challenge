@@ -8,30 +8,39 @@ int main() {
     constexpr auto pixelSize = wallSize/ canvasPixels;
     constexpr auto half = wallSize/ 2.0;
 
-    const auto red = Color::red();
     const auto black = Color::black();
-    const auto shape = Sphere();
+    auto shape = Sphere();
+    shape.material = Material {};
+    shape.material.color = color(1, 0.2, 1);
+
+    const auto lightPosition = point(-10, 10, -10);
+    const auto lightColor = color(1,1,1);
+    const auto light = pointLight(lightPosition, lightColor);
+
 
     std::vector<std::vector<Color>> image(canvasPixels, std::vector<Color>(canvasPixels, Color::black()));
     auto canvas = Canvas {canvasPixels, canvasPixels};
 
     for (int y = 0; y < canvasPixels; ++y) {
-        const auto worldY = half - pixelSize * y;
         for (int x = 0; x < canvasPixels; ++x) {
-            constexpr auto wallZ = 10.0;
-            const auto worldX = -half + pixelSize * x;
-            const auto position = point(worldX, worldY, wallZ);
+            const auto position = point(-half + pixelSize * x, half - pixelSize * y, 10.0);
             const auto r = Ray {rayOrigin, (position-rayOrigin).normalize() };
-            if (const auto xs = shape.intersect(r); xs.hit().has_value()) {
-                image[x][y] = red;
+
+            const auto xs = shape.intersect(r);
+            if (const auto hit = xs.hit(); hit.has_value()) {
+                auto it = *hit;
+                const auto p = r.position(it.t);
+                const auto normal = it.object->normalAt(p);
+                const auto eye = -r.direction;
+                // canvas.setPixel(x, y, it.object->material.lighting(light, p, eye, normal));
+                image[y][x] = it.object->material.lighting(light, p, eye, normal);
                 continue;
             }
-            image[x][y] = black;
+            // canvas.setPixel(x,y, black);
+            image[y][x] = black;
         }
     }
-
-    canvas.setImage(image);
-    canvas.display();
+    canvas.display(image);
 
     return 0;
 }

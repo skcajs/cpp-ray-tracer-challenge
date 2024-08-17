@@ -37,6 +37,7 @@ add_executable(cpp_ray_tracer_challenge
         src/Light.h
         src/Material.cpp
         src/Material.h
+        src/Interval.h
 )
 
 # Include the X11 headers

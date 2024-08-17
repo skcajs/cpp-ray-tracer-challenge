@@ -8,7 +8,7 @@
 
 Ray::Ray(const Point &origin, const Vector &direction): origin(origin), direction(direction) {}
 
-Point Ray::position(const float t) const {
+Point Ray::position(const double t) const {
     return origin + direction * t;
 }
 

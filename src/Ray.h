@@ -16,7 +16,7 @@ public:
 
     Ray(const Point &origin, const Vector &direction);
 
-    [[nodiscard]] Point position(float t) const;
+    [[nodiscard]] Point position(double t) const;
     [[nodiscard]] Ray transform(const Matrix &m) const;
 };
 

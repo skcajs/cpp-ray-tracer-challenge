@@ -9,12 +9,12 @@
 
 struct Material {
     Color color;
-    float ambient;
-    float diffuse;
-    float specular;
-    float shininess;
+    double ambient;
+    double diffuse;
+    double specular;
+    double shininess;
 
-    explicit Material(const Color &color = Color{1,1,1}, float ambient = 0.1, float diffuse = 0.9, float specular = 0.9, float shininess = 200.0);
+    explicit Material(const Color &color = Color{1,1,1}, double ambient = 0.1, double diffuse = 0.9, double specular = 0.9, double shininess = 200.0);
 
     [[nodiscard]] Color lighting(const Light & light, const Point & p, const Vector & eyeV, const Vector & normalV) const;
 };

@@ -81,6 +81,10 @@ Color Color::blue() {
     return Color {0, 0, 1, 1};
 }
 
+Color Color::white() {
+    return Color {1, 1, 1, 1};
+}
+
 // Non-member functions
 Color color(const double r, const double g, const double b) {
     return Color {r, g, b, 1};
