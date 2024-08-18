@@ -10,8 +10,8 @@
 
 class Light {
 public:
-    const Point position;
-    const Color intensity;
+    Point position;
+    Color intensity;
     Light(const Point& position, const Color& intensity);
 };
 

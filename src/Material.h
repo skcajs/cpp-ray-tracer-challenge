@@ -19,6 +19,7 @@ struct Material {
     [[nodiscard]] Color lighting(const Light & light, const Point & p, const Vector & eyeV, const Vector & normalV) const;
 };
 
+bool operator==(const Material &lhs, const Material &rhs);
 
 
 #endif //MATERIAL_H

@@ -8,6 +8,16 @@
 #include <cmath>
 
 Sphere::Sphere(const Point &origin) : origin(origin) {}
+Sphere::Sphere(const Sphere &sphere) = default;
+
+Sphere& Sphere::operator=(const Sphere& sphere) {
+    if (this == &sphere) return *this;
+    origin = sphere.origin;
+    transform = sphere.transform;
+    material = sphere.material;
+    // Deep copy any necessary resources here, if applicable.
+    return *this;
+}
 
 Intersections Sphere::intersect(const Ray &r) const {
     const auto r2 = r.transform(transform.inverse());
@@ -34,4 +44,8 @@ Vector Sphere::normalAt(const Point &worldPoint) const {
     const auto worldNormal = transform.inverse().transpose() * objectNormal;
     worldNormal.resetWVector(); // Dont like this
     return worldNormal.normalize();
+}
+
+bool operator==(const Sphere &lhs, const Sphere &rhs) {
+    return lhs.origin == rhs.origin && lhs.transform == rhs.transform && lhs.material == rhs.material;
 }

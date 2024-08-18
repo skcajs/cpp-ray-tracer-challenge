@@ -41,4 +41,6 @@ Color color(double r, double g, double b);
 Color operator+(const Color& u, const Color& v);
 Color operator-(const Color& u, const Color& v);
 
+bool operator==(const Color &lhs, const Color &rhs);
+
 #endif // COLOR_H

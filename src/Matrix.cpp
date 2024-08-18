@@ -2,39 +2,39 @@
 
 #include <stdexcept>
 
-Matrix::Matrix(const std::vector<double> &data) : size(static_cast<std::size_t>(std::sqrt(data.size()))){
-
-    if (size < 0) {
-        throw std::invalid_argument("Matrix dimensions must be positive");
-    }
-
-    allocateMatrix(size);
-
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            e[i][j] = data[i * size + j];
-        }
+Matrix::Matrix(const std::vector<double>& data) : size(static_cast<std::size_t>(std::sqrt(data.size()))), e(data) {
+    if (size * size != data.size()) {
+        throw std::invalid_argument("Invalid data size for a square matrix.");
     }
 }
 
-Matrix::Matrix(const std::size_t size) : size(size) {
-    allocateMatrix(size);
-}
+Matrix::Matrix(const std::size_t size) : size(size), e(size * size, 0.0) {}
 
 Matrix& Matrix::operator=(const Matrix& other) {
-    if (this == &other) return *this;
-
-    deallocateMatrix();
-
-    size = other.size;
-    allocateMatrix(size);
-
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            e[i][j] = other.e[i][j];
-        }
+    if (this != &other) {
+        size = other.size;
+        e = other.e;
     }
     return *this;
+}
+
+std::size_t Matrix::index(const int row, const int col) const {
+    if (row < 0 || row >= size || col < 0 || col >= size) {
+        throw std::out_of_range("Matrix index out of range");
+    }
+    return row * size + col;
+}
+
+double Matrix::element(const int row, const int col) const {
+    return e[index(row, col)];
+}
+
+void Matrix::setElement(const int row, const int col, const double value) {
+    e[index(row, col)] = value;
+}
+
+std::vector<double> Matrix::getElements() const {
+    return e;
 }
 
 Tuple Matrix::operator*(const Tuple& other) const {
@@ -43,11 +43,30 @@ Tuple Matrix::operator*(const Tuple& other) const {
     }
 
     return {
-        e[0][0] * other.x + e[0][1] * other.y + e[0][2] * other.z + e[0][3] * other.w,
-        e[1][0] * other.x + e[1][1] * other.y + e[1][2] * other.z + e[1][3] * other.w,
-        e[2][0] * other.x + e[2][1] * other.y + e[2][2] * other.z + e[2][3] * other.w,
-        e[3][0] * other.x + e[3][1] * other.y + e[3][2] * other.z + e[3][3] * other.w
+        e[index(0,0)] * other.x + e[index(0,1)] * other.y + e[index(0,2)] * other.z + e[index(0,3)] * other.w,
+        e[index(1,0)] * other.x + e[index(1,1)] * other.y + e[index(1,2)] * other.z + e[index(1,3)] * other.w,
+        e[index(2,0)] * other.x + e[index(2,1)] * other.y + e[index(2,2)] * other.z + e[index(2,3)] * other.w,
+        e[index(3,0)] * other.x + e[index(3,1)] * other.y + e[index(3,2)] * other.z + e[index(3,3)] * other.w
     };
+}
+
+Matrix Matrix::operator*(const Matrix &other) const {
+    if (size != other.size) {
+        throw std::invalid_argument("Both matrices must be of the same size for multiplication.");
+    }
+
+    Matrix result(size); // Create an empty matrix for the result
+
+    for (int row = 0; row < size; ++row) {
+        for (int col = 0; col < size; ++col) {
+            double sum = 0;
+            for (int k = 0; k < size; ++k) {
+                sum += e[index(row, k)] * other.e[other.index(k, col)];
+            }
+            result.e[result.index(row, col)] = sum;
+        }
+    }
+    return result;
 }
 
 Matrix Matrix::Identity() {
@@ -62,7 +81,7 @@ Matrix Matrix::Identity() {
 }
 
 Matrix Matrix::transpose() const {
-    const Matrix result {size};
+    Matrix result {size};
 
     // Populate the transposed matrix
     for (int i = 0; i < size; ++i) {
@@ -77,10 +96,10 @@ double Matrix::determinant() const { // NOLINT(*-no-recursion)
     double det = 0;
 
     if (size == 2) {
-        det = e[0][0] * e[1][1] - e[0][1] * e[1][0];
+        det = e[index(0,0)] * e[index(1,1)] - e[index(0,1)] * e[index(1,0)];
     } else {
         for (int i = 0; i < size; ++i) {
-            det += e[0][i] * cofactor(0, i);
+            det += e[index(0,i)] * cofactor(0, i);
         }
     }
     return det;
@@ -95,14 +114,14 @@ Matrix Matrix::subMatrix(const int rowToRemove, const int colToRemove) const {
     // Create the submatrix with size reduced by 1
     Matrix sub(size - 1);
 
-    std::size_t subRow = 0;
+    int subRow = 0;
 
     for (int i = 0; i < size; ++i) {
         if (i == rowToRemove) continue; // Skip the row to remove
-        std::size_t subCol = 0; // Reset column index for each new row in the submatrix
+        int subCol = 0; // Reset column index for each new row in the submatrix
         for (int j = 0; j < size; ++j) {
             if (j == colToRemove) continue; // Skip the column to remove
-            sub.e[subRow][subCol] = e[i][j];
+            sub.e[sub.index(subRow, subCol)] = e[index(i, j)];
             ++subCol;
         }
         ++subRow;
@@ -139,7 +158,7 @@ Matrix Matrix::inverse() const {
     if(!isInvertible()) {
         throw std::invalid_argument("Matrix is not invertible");
     }
-    const Matrix m { size };
+    Matrix m { size };
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             const auto c = cofactor(i, j);
@@ -149,34 +168,6 @@ Matrix Matrix::inverse() const {
     return m;
 }
 
-Matrix::~Matrix() {
-    deallocateMatrix();
-}
-
-void Matrix::allocateMatrix(const std::size_t size) {
-    e = new double*[size];
-    for (int i = 0; i < size; ++i) {
-        e[i] = new double[size];
-    }
-}
-
-void Matrix::deallocateMatrix() const {
-    for (int i = 0; i < size; ++i) {
-        delete[] e[i];
-    }
-    delete[] e;
-}
-
-double Matrix::element(const int row, const int col) const {
-    if (row < 0 || row >= size || col < 0 || col >= size) {
-        throw std::out_of_range("Matrix index out of range");
-    }
-    return e[row][col];
-}
-
-void Matrix::setElement(const int row, const int col, const double value) const {
-    if (row < 0 || row >= size || col < 0 || col >= size) {
-        throw std::out_of_range("Matrix index out of range");
-    }
-    e[row][col] = value;
+bool operator==(const Matrix &lhs, const Matrix &rhs) {
+    return lhs.getElements()  == rhs.getElements();
 }

@@ -97,3 +97,7 @@ Color operator+(const Color& u, const Color& v) {
 Color operator-(const Color& u, const Color& v) {
     return Color {u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2], 1 };
 }
+
+bool operator==(const Color &lhs, const Color &rhs) {
+    return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a;
+}

@@ -23,6 +23,7 @@
 #include "../src/Intersections.h"
 #include "../src/Light.h"
 #include "../src/Material.h"
+#include "../src/World.h"
 
 
 

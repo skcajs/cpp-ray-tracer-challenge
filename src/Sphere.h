@@ -17,6 +17,9 @@ public:
     Material material;
 
     explicit Sphere(const Point &origin  = point(0,0,0));
+    Sphere(const Sphere& sphere);
+
+    Sphere& operator=(const Sphere& sphere);
 
     [[nodiscard]] Intersections intersect(const Ray &r) const;
     void setTransform(const Matrix& m);
@@ -24,8 +27,6 @@ public:
     Vector normalAt(const Point &worldPoint) const;
 };
 
-inline bool operator==(const Sphere &lhs, const Sphere &rhs) {
-    return lhs.origin == rhs.origin;
-}
+bool operator==(const Sphere &lhs, const Sphere &rhs);
 
 #endif //SPHERE_H

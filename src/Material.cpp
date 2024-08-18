@@ -28,3 +28,7 @@ Color Material::lighting(const Light &light, const Point &p, const Vector &eyeV,
     }
     return iAmbient + iDiffuse + iSpecular;
 }
+
+bool operator==(const Material &lhs, const Material &rhs) {
+    return lhs.ambient == rhs.ambient && lhs.diffuse == rhs.diffuse && lhs.shininess == rhs.shininess && lhs.specular == rhs.specular && lhs.color == rhs.color;
+}
