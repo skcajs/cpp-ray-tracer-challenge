@@ -80,33 +80,33 @@ TEST_CASE("Intersecting a translated sphere with a ray") {
 TEST_CASE("The normal on a sphere at a point on the x axis") {
     const auto s = Sphere {};
     const auto n = s.normalAt(point(1, 0, 0));
-    REQUIRE_TUPLES(n, vector(1,0,0));
+    COMPARE_TUPLES(n, vector(1,0,0));
 }
 
 TEST_CASE("The normal on a sphere at a point on the y axis") {
     const auto s = Sphere {};
     const auto n = s.normalAt(point(0, 1, 0));
-    REQUIRE_TUPLES(n, vector(0,1,0));
+    COMPARE_TUPLES(n, vector(0,1,0));
 }
 
 TEST_CASE("The normal on a sphere at a point on the z axis") {
     const auto s = Sphere {};
     const auto n = s.normalAt(point(0, 0, 1));
-    REQUIRE_TUPLES(n, vector(0,0,1));
+    COMPARE_TUPLES(n, vector(0,0,1));
 }
 
 TEST_CASE("The normal on a sphere at a nonaxial point") {
     const auto root = std::sqrt(3)/3.0;
     const auto s = Sphere {};
     const auto n = s.normalAt(point(root, root, root));
-    REQUIRE_TUPLES(n, vector(root,root,root));
+    COMPARE_TUPLES(n, vector(root,root,root));
 }
 
 TEST_CASE("The normal is a normalized vector") {
     constexpr auto root = std::sqrt(3)/3.0;
     const auto s = Sphere {};
     const auto n = s.normalAt(point(root, root, root));
-    REQUIRE_TUPLES(n, vector(root,root,root).normalize());
+    COMPARE_TUPLES(n, vector(root,root,root).normalize());
 }
 
 TEST_CASE("Computing the normal on a translated sphere") {
@@ -114,7 +114,7 @@ TEST_CASE("Computing the normal on a translated sphere") {
     auto s = Sphere {};
     s.setTransform(translation(0,1,0));
     const auto n = s.normalAt(point(0, 1+a, -a));
-    REQUIRE_TUPLES(n, vector(0,a,-a));
+    COMPARE_TUPLES(n, vector(0,a,-a));
 }
 
 TEST_CASE("Computing the normal on a transformed sphere") {
@@ -122,7 +122,7 @@ TEST_CASE("Computing the normal on a transformed sphere") {
     auto s = Sphere {};
     s.setTransform(scaling(1,0.5,1) * rotationZ(M_PI/5));
     const auto n = s.normalAt(point(0, root, -root));
-    REQUIRE_TUPLES(n, vector(0,0.97014,-0.24254));
+    COMPARE_TUPLES(n, vector(0,0.97014,-0.24254));
 }
 
 TEST_CASE("A sphere has a default material") {

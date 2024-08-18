@@ -6,7 +6,7 @@
 
 TEST_CASE("The default material") {
     const auto m = Material {};
-    REQUIRE_COLORS(m.color, color(1,1,1));
+    COMPARE_COLORS(m.color, color(1,1,1));
     REQUIRE(m.ambient == 0.1);
     REQUIRE(m.diffuse == 0.9);
     REQUIRE(m.specular == 0.9);
@@ -21,7 +21,7 @@ TEST_CASE("Lighting with the eye between the light and the surface") {
     const auto normalV = vector(0,0,-1);
     const auto light = pointLight(point(0,0,-10), color(1,1,1));
     const auto result = m.lighting(light, position, eyeV, normalV);
-    REQUIRE_COLORS(result, color(1.9,1.9,1.9));
+    COMPARE_COLORS(result, color(1.9,1.9,1.9));
 }
 
 TEST_CASE("Lighting with the eye between the light and the surface, eye offset 45") {
@@ -33,7 +33,7 @@ TEST_CASE("Lighting with the eye between the light and the surface, eye offset 4
     const auto normalV = vector(0,0,-1);
     const auto light = pointLight(point(0,0,-10), color(1,1,1));
     const auto result = m.lighting(light, position, eyeV, normalV);
-    REQUIRE_COLORS(result, color(1.0,1.0,1.0));
+    COMPARE_COLORS(result, color(1.0,1.0,1.0));
 }
 
 TEST_CASE("Lighting with the eye opposite the surface, light offset 45") {
@@ -45,7 +45,7 @@ TEST_CASE("Lighting with the eye opposite the surface, light offset 45") {
     const auto normalV = vector(0,0,-1);
     const auto light = pointLight(point(0,10,-10), color(1,1,1));
     const auto result = m.lighting(light, position, eyeV, normalV);
-    REQUIRE_COLORS(result, color(n,n,n));
+    COMPARE_COLORS(result, color(n,n,n));
 }
 
 TEST_CASE("Lighting with the eye in the path of the reflection vector") {
@@ -58,7 +58,7 @@ TEST_CASE("Lighting with the eye in the path of the reflection vector") {
     const auto normalV = vector(0,0,-1);
     const auto light = pointLight(point(0,10,-10), color(1,1,1));
     const auto result = m.lighting(light, position, eyeV, normalV);
-    REQUIRE_COLORS(result, color(n,n,n));
+    COMPARE_COLORS(result, color(n,n,n));
 }
 
 TEST_CASE("Lighting with the light behind the surface") {
@@ -70,5 +70,5 @@ TEST_CASE("Lighting with the light behind the surface") {
     const auto normalV = vector(0,0,-1);
     const auto light = pointLight(point(0,0,10), color(1,1,1));
     const auto result = m.lighting(light, position, eyeV, normalV);
-    REQUIRE_COLORS(result, color(n,n,n));
+    COMPARE_COLORS(result, color(n,n,n));
 }

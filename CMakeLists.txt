@@ -40,6 +40,8 @@ add_executable(cpp_ray_tracer_challenge
         src/Interval.h
         src/World.cpp
         src/World.h
+        src/Computations.cpp
+        src/Computations.h
 )
 
 # Include the X11 headers
@@ -62,6 +64,7 @@ add_executable(tests
         src/Light.cpp
         src/Material.cpp
         src/World.cpp
+        src/Computations.cpp
 
         tests/test_tuples.cpp
         tests/test_colors.cpp

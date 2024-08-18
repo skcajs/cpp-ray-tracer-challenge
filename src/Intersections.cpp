@@ -6,6 +6,8 @@
 
 Intersections::Intersections(const std::initializer_list<Intersection> its) : std::vector<Intersection>(its) {}
 
+Intersections::Intersections(const std::vector<Intersection> &its) : std::vector<Intersection>(its) {}
+
 std::optional<Intersection> Intersections::hit() const {
     std::optional<Intersection> closest = std::nullopt;
     for (const auto& intersection : *this) {

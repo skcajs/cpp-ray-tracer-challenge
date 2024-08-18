@@ -15,7 +15,12 @@ public:
     Light(const Point& position, const Color& intensity);
 };
 
+bool operator==(const Light &lhs, const Light &rhs);
+
+
 Light pointLight(const Point &position, const Color &intensity);
+
+
 
 
 

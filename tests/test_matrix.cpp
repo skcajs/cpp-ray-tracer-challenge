@@ -61,28 +61,28 @@ TEST_CASE("Multiplying two matrices") {
     const Matrix result = a * b;
     const std::vector<double> e3 = { 20,22,50,48,44,54,114,108,40,58,110,102,16,26,46,42 };
     const Matrix expected { e3 };
-    REQUIRE_MATRICES(result, expected);
+    COMPARE_MATRICES(result, expected);
 }
 
 TEST_CASE("Multiplying a matrix by a tuple") {
     const std::vector<double> e1 = { 1,2,3,4,2,4,4,2,8,6,4,1,0,0,0,1 };
     const auto a = Matrix { e1};
     const auto b = Tuple {1,2,3,1};
-    REQUIRE_TUPLES(a * b, Tuple {18, 24, 33, 1});
+    COMPARE_TUPLES(a * b, Tuple {18, 24, 33, 1});
 }
 
 TEST_CASE("Multiplying a matrix by the Identity Matrix") {
     const std::vector<double> e1 = { 1,2,3,4,2,4,4,2,8,6,4,1,0,0,0,1 };
     const auto a = Matrix {e1};
     const auto b = Matrix::Identity();
-    REQUIRE_MATRICES(a * b, a);
+    COMPARE_MATRICES(a * b, a);
 }
 
 TEST_CASE("Multiplying a tuple by the Identity Matrix") {
     double e1[16] = { 1,2,3,4,2,4,4,2,8,6,4,1,0,0,0,1 };
     const auto a = Tuple { 1,2,3,4};
     const auto b = Matrix::Identity();
-    REQUIRE_TUPLES(b * a, a);
+    COMPARE_TUPLES(b * a, a);
 }
 
 TEST_CASE("Transposing a matrix A") {
@@ -103,7 +103,7 @@ TEST_CASE("Transposing a matrix A") {
     };
     const auto b = Matrix {e2};
 
-    REQUIRE_MATRICES(a.transpose(), b);
+    COMPARE_MATRICES(a.transpose(), b);
 }
 
 TEST_CASE("Calculating the determinant of a 2x2 matrix")
@@ -127,7 +127,7 @@ TEST_CASE("A submatrix of a 3x3 is a 2x2")
     };
     const auto a = Matrix { e };
 
-    REQUIRE_MATRICES(a.subMatrix(0,2), Matrix {{-3,2,0,6}});
+    COMPARE_MATRICES(a.subMatrix(0,2), Matrix {{-3,2,0,6}});
 }
 
 TEST_CASE("A submatrix of a 4x4 is a 3x3")
@@ -141,7 +141,7 @@ TEST_CASE("A submatrix of a 4x4 is a 3x3")
     };
     const auto a = Matrix { e };
 
-    REQUIRE_MATRICES(a.subMatrix(2,1), Matrix {{1,3,4,5,7,8,5,3,2}});
+    COMPARE_MATRICES(a.subMatrix(2,1), Matrix {{1,3,4,5,7,8,5,3,2}});
 }
 
 TEST_CASE("Calculate a minor of a 3x3 matrix")
@@ -302,7 +302,7 @@ TEST_CASE("Calculating the inverse of a matrix") {
     };
     const auto expectedMatrix = Matrix{expected};
 
-    // REQUIRE_MATRICES(b, expectedMatrix);
+    // COMPARE_MATRICES(b, expectedMatrix);
 }
 
 TEST_CASE("Calculating the inverse of more matrices") {
@@ -325,7 +325,7 @@ TEST_CASE("Calculating the inverse of more matrices") {
 
         const Matrix actual_inverse = A.inverse();
 
-        REQUIRE(actual_inverse == expected_inverse1_matrix);
+        COMPARE_MATRICES(actual_inverse, expected_inverse1_matrix);
     }
 
     SECTION("Second matrix") {
@@ -347,7 +347,7 @@ TEST_CASE("Calculating the inverse of more matrices") {
 
         const Matrix actual_inverse = A.inverse();
 
-        REQUIRE(actual_inverse == expected_inverse2_matrix);
+        COMPARE_MATRICES(actual_inverse, expected_inverse2_matrix);
     }
 }
 
@@ -380,5 +380,5 @@ TEST_CASE("Multiplying a product by its inverse") {
     const Matrix result = C * B_inv;
 
     // Verify that result equals A
-    REQUIRE(result == A);
+    COMPARE_MATRICES(result, A);
 }

@@ -18,6 +18,8 @@ class Intersections : public std::vector<Intersection> {
 public:
     // Variadic constructor using initializer list
     Intersections(std::initializer_list<Intersection> its);
+    explicit Intersections(const std::vector<Intersection>& its);
+
 
     [[nodiscard]] std::optional<Intersection> hit() const;
 };

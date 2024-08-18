@@ -16,6 +16,12 @@ public:
     std::optional<Light> light;
 
     World();
+    World(std::vector<Sphere> objects, const std::optional<Light> &light);
+
+    Intersections intersectWorld(const Ray &ray) const;
+
+    Color shadeHit(const Computations &comps) const;
+    Color colorAt(const Ray &ray) const;
 };
 
 World defaultWorld();

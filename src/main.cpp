@@ -4,7 +4,7 @@
 int main() {
     const auto rayOrigin = point(0,0,-5);
     constexpr auto wallSize = 7.0;
-    constexpr auto canvasPixels = 512;
+    constexpr auto canvasPixels = 256;
     constexpr auto pixelSize = wallSize/ canvasPixels;
     constexpr auto half = wallSize/ 2.0;
 
@@ -16,7 +16,6 @@ int main() {
     const auto lightPosition = point(-10, 10, -10);
     const auto lightColor = color(1,1,1);
     const auto light = pointLight(lightPosition, lightColor);
-
 
     std::vector<std::vector<Color>> image(canvasPixels, std::vector<Color>(canvasPixels, Color::black()));
     auto canvas = Canvas {canvasPixels, canvasPixels};

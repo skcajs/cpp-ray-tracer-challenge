@@ -15,7 +15,6 @@ Sphere& Sphere::operator=(const Sphere& sphere) {
     origin = sphere.origin;
     transform = sphere.transform;
     material = sphere.material;
-    // Deep copy any necessary resources here, if applicable.
     return *this;
 }
 

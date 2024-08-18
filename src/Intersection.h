@@ -4,6 +4,8 @@
 
 #ifndef INTERSECTION_H
 #define INTERSECTION_H
+#include "Computations.h"
+#include "Ray.h"
 
 class Sphere;
 
@@ -14,6 +16,8 @@ public:
     Intersection(double t, const Sphere* object);
 
     bool operator==(const Intersection& other) const;
+
+    [[nodiscard]] Computations prepare_computations(const Ray & ray) const;
 };
 
 

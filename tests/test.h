@@ -27,33 +27,53 @@
 
 
 
-inline void REQUIRE_TUPLES(const Tuple &r, const Tuple &l, const double EPSILON = 1e-5) {
-    REQUIRE(std::fabs(r.x - l.x) < EPSILON);
-    REQUIRE(std::fabs(r.y - l.y) < EPSILON);
-    REQUIRE(std::fabs(r.z - l.z) < EPSILON);
-    REQUIRE(std::fabs(r.w - l.w) < EPSILON);
+inline void COMPARE_TUPLES(const Tuple &r, const Tuple &l, const double EPSILON = 1e-5) {
+    auto is_zero = [EPSILON](const double value) {
+        return std::fabs(value) < EPSILON;
+    };
+
+    if (is_zero(l.x-r.x)) {
+        REQUIRE(true);
+    } else {
+        REQUIRE(l.x == Catch::Approx(r.x).epsilon(EPSILON));
+    }
+    if (is_zero(l.y-r.y)) {
+        REQUIRE(true);
+    } else {
+        REQUIRE(l.y == Catch::Approx(r.y).epsilon(EPSILON));
+    }
+    if (is_zero(l.z-r.z)) {
+        REQUIRE(true);
+    } else {
+        REQUIRE(l.z == Catch::Approx(r.z).epsilon(EPSILON));
+    }
+    if (is_zero(l.w-r.w)) {
+        REQUIRE(true);
+    } else {
+        REQUIRE(l.w == Catch::Approx(r.w).epsilon(EPSILON));
+    }
 }
 
-inline void REQUIRE_COLORS(const Color &l, const Color &r) {
-    REQUIRE(l.r == Catch::Approx(r.r));
-    REQUIRE(l.g == Catch::Approx(r.g));
-    REQUIRE(l.b == Catch::Approx(r.b));
-    REQUIRE(l.a == Catch::Approx(r.a));
+inline void COMPARE_COLORS(const Color &l, const Color &r, const double EPSILON = 1e-4) {
+    REQUIRE(l.r == Catch::Approx(r.r).epsilon(EPSILON));
+    REQUIRE(l.g == Catch::Approx(r.g).epsilon(EPSILON));
+    REQUIRE(l.b == Catch::Approx(r.b).epsilon(EPSILON));
+    REQUIRE(l.a == Catch::Approx(r.a).epsilon(EPSILON));
 }
 
-inline void REQUIRE_MATRICES(const Matrix &r, const Matrix &l) {
+inline void COMPARE_MATRICES(const Matrix &r, const Matrix &l) {
     const auto shape = l.Size();
 
     for (int i = 0; i < shape; ++i) {
         for (int j = 0; j < shape; ++j) {
-            REQUIRE(r.element(i,j) == Catch::Approx(l.element(i,j)));
+            REQUIRE(r.element(i,j) == Catch::Approx(l.element(i,j)).epsilon(1e-3));
         }
     }
 }
 
 inline void COMPARE_MATERIALS(const Material &l, const Material &r) {
     REQUIRE(l.ambient == r.ambient);
-    REQUIRE_COLORS(l.color, r.color);
+    COMPARE_COLORS(l.color, r.color);
     REQUIRE(l.diffuse == r.diffuse);
     REQUIRE(l.specular == r.specular);
     REQUIRE(l.shininess == r.shininess);

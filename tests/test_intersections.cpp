@@ -68,3 +68,36 @@ TEST_CASE("The hit is always the lowest nonnegative intersection") {
     const auto i = xs.hit();
     REQUIRE(i == i4);
 }
+
+TEST_CASE("Precomputing the state of an intersection") {
+    const auto r = Ray { point(0,0,-5), vector(0,0,1) };
+    const auto shape = Sphere {};
+    const auto i = Intersection(4, &shape);
+    const auto comps = i.prepare_computations(r);
+    REQUIRE(comps.t == i.t);
+    REQUIRE(comps.object == i.object);
+    COMPARE_TUPLES(comps.pos, point(0,0,-1));
+    COMPARE_TUPLES(comps.eye, vector(0,0,-1));
+    COMPARE_TUPLES(comps.normal, vector(0,0,-1));
+}
+
+TEST_CASE("The hit, when an intersection occurs on the outside") {
+    const auto r = Ray { point(0,0,-5), vector(0,0,1) };
+    const auto shape = Sphere {};
+    const auto i = Intersection(4, &shape);
+    const auto comps = i.prepare_computations(r);
+    REQUIRE(comps.inside == false);
+}
+
+TEST_CASE("The hit, when an intersection occurs on the inside") {
+    const auto r = Ray { point(0,0,0), vector(0,0,1) };
+    const auto shape = Sphere {};
+    const auto i = Intersection(1, &shape);
+    const auto comps = i.prepare_computations(r);
+    REQUIRE(comps.t == i.t);
+    REQUIRE(comps.object == i.object);
+    COMPARE_TUPLES(comps.pos, point(0,0,1));
+    COMPARE_TUPLES(comps.eye, vector(0,0,-1));
+    COMPARE_TUPLES(comps.normal, vector(0,0,-1));
+    REQUIRE(comps.inside == true);
+}
