@@ -55,7 +55,7 @@ Matrix Matrix::operator*(const Matrix &other) const {
         throw std::invalid_argument("Both matrices must be of the same size for multiplication.");
     }
 
-    Matrix result(size); // Create an empty matrix for the result
+    Matrix result(size);
 
     for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
@@ -106,21 +106,19 @@ double Matrix::determinant() const { // NOLINT(*-no-recursion)
 }
 
 Matrix Matrix::subMatrix(const int rowToRemove, const int colToRemove) const {
-    // Check if the indices are within bounds
     if (rowToRemove < 0 || rowToRemove >= size || colToRemove < 0 || colToRemove >= size) {
         throw std::out_of_range("Row or column index out of range");
     }
 
-    // Create the submatrix with size reduced by 1
     Matrix sub(size - 1);
 
     int subRow = 0;
 
     for (int i = 0; i < size; ++i) {
-        if (i == rowToRemove) continue; // Skip the row to remove
-        int subCol = 0; // Reset column index for each new row in the submatrix
+        if (i == rowToRemove) continue;
+        int subCol = 0;
         for (int j = 0; j < size; ++j) {
-            if (j == colToRemove) continue; // Skip the column to remove
+            if (j == colToRemove) continue;
             sub.e[sub.index(subRow, subCol)] = e[index(i, j)];
             ++subCol;
         }
@@ -140,13 +138,8 @@ double Matrix::cofactor(const int row, const int col) const { // NOLINT(*-no-rec
     if (row < 0 || row >= size || col < 0 || col >= size) {
         throw std::out_of_range("Matrix index out of range");
     }
-
-    // Calculate the minor of the element at (row, col)
     const double minorValue = minor(row, col);
-
-    // Calculate the cofactor
     const double cofactorValue = (static_cast<double>((row + col) % 2 == 0 ? 1 : -1)) * minorValue;;
-
     return cofactorValue;
 }
 
